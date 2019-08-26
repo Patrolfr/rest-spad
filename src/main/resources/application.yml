@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    initialization-mode: embedded
+    username: greuser
+    password: gre123
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/scratchpad_db
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:non_contextual_creation: true
