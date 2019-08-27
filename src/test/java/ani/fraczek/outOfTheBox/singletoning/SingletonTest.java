@@ -2,11 +2,13 @@ package ani.fraczek.outOfTheBox.singletoning;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.test.annotation.DirtiesContext;
 
 public class SingletonTest {
 
 
     @Test
+    @DirtiesContext
     public void singleton_createdByClassLoader_mayHave_manyInstances() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
 
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
@@ -22,13 +24,24 @@ public class SingletonTest {
         Single single = (Single) obj;
 
 //        interesting, getInstance hasn't been called while single's instance single has been initialized
-        Assert.assertEquals(0l, single.getGetInstanceCounter());
+        Assert.assertEquals(0L, single.getGetInstanceCounter());
         Assert.assertNotEquals(single, single.getInstance());
     }
 
+    @Test
+    public void singleton_singleInstance_test(){
 
+        Assert.assertEquals(0L, Single.getGetInstanceCounter());
 
+        Single instance = Single.getInstance();
+        Assert.assertEquals(1L, Single.getGetInstanceCounter());
 
+        Single instance2 = Single.getInstance();
+        Assert.assertEquals(2L, Single.getGetInstanceCounter());
 
+        Assert.assertEquals(instance, instance2);
+        Assert.assertEquals(instance.hashCode(), instance2.hashCode());
+        Assert.assertTrue(instance == instance2);
+    }
 
 }
