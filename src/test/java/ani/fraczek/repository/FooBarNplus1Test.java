@@ -1,8 +1,9 @@
-package ani.fraczek.Nplus1Test;
+package ani.fraczek.repository;
 
 
 import ani.fraczek.FooRepository;
 import ani.fraczek.domain.entity.Foo;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +20,12 @@ public class FooBarNplus1Test {
     @Autowired
     private FooRepository fooRepository;
 
-
-
     @Test
     public void givenListOfElements_Test(){
 
-
-
-        fooRepository.save(new Foo());
-
-
+        Foo foo = fooRepository.save(new Foo());
+        Assert.assertEquals(1l, fooRepository.findAll().size());
 
     }
-
 
 }
