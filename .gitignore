@@ -1,5 +1,7 @@
 
+### Java ###
 *.class
+/out/
 
 # Package Files #
 *.jar
