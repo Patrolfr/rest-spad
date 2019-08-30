@@ -1,6 +1,8 @@
 package ani.fraczek.outOfTheBox;
 
 
+import ani.fraczek.FooRepository;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,9 +28,15 @@ public class ControllerSecureTest {
     @Autowired
     MockMvc mockMvc;
 
-    @Before
-    public void setUp(){
+    @Autowired
+    FooRepository fooRepository;
 
+    @Before
+    public void setUp(){}
+
+    @After
+    public void clean(){
+        fooRepository.deleteAll();
     }
 
     @Test
