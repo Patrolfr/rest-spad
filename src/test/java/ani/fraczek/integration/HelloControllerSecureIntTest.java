@@ -1,7 +1,7 @@
-package ani.fraczek.outOfTheBox;
+package ani.fraczek.integration;
 
 
-import ani.fraczek.FooRepository;
+import ani.fraczek.repository.FooRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public class ControllerSecureTest {
+public class HelloControllerSecureIntTest {
 
     @Autowired
     MockMvc mockMvc;

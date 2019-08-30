@@ -1,4 +1,4 @@
-package ani.fraczek.outOfTheBox.mapkey;
+package ani.fraczek.playground.mapkey;
 
 import org.junit.Assert;
 import org.junit.Test;

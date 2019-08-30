@@ -1,4 +1,4 @@
-package ani.fraczek.outOfTheBox.singletoning;
+package ani.fraczek.playground.singletoning;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class SingletonTest {
 
         ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
 
-        Class<?> SingleClass = systemClassLoader.loadClass("ani.fraczek.outOfTheBox.singletoning.Single");
+        Class<?> SingleClass = systemClassLoader.loadClass("ani.fraczek.playground.singletoning.Single");
 
         Object obj = SingleClass.newInstance();
         Assert.assertTrue(obj instanceof Single);;

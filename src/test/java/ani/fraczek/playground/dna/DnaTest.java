@@ -1,4 +1,4 @@
-package ani.fraczek.outOfTheBox.dna;
+package ani.fraczek.playground.dna;
 
 
 import org.junit.Test;

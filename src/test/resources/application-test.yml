@@ -1,4 +1,4 @@
-spring:create-drop
+spring:
   datasource:
     initialization-mode: embedded
     username: greuser

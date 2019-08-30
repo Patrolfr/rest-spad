@@ -1,4 +1,4 @@
-package ani.fraczek.outOfTheBox.singletoning;
+package ani.fraczek.playground.singletoning;
 
 
 import lombok.Getter;

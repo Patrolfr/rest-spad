@@ -1,4 +1,4 @@
-package ani.fraczek;
+package ani.fraczek.repository;
 
 
 import ani.fraczek.domain.entity.Foo;
