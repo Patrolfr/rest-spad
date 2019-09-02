@@ -2,6 +2,6 @@
 create table spad_obj_type (id int8 not null, type varchar(255), last_modified timestamp, primary key (id));
 create table foo (id  bigserial not null, email varchar(255), name varchar(255), object_type_id int8 not null references spad_obj_type, primary key (id));
 
-
-INSERT INTO spad_obj_type VALUES(1, 'not_domain_object', now());
-INSERT INTO foo VALUES(10, 'A','B', 1);
+create table spad_user (id  bigserial not null, created_date timestamp, email varchar(255) not null, encrypted_password varchar(255) not null, first_name varchar(255), last_name varchar(255), login varchar(255) not null, primary key (id));
+create table role (id  bigserial not null, name varchar(255), primary key (id));
+create table user_role (user_id int8 not null references spad_user, role_id int8 not null references role, primary key (user_id, role_id));
