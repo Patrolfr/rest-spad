@@ -1,5 +1,6 @@
 package ani.fraczek.domain.entity;
 
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "spad_user")
+@Getter
 public class User {
 
     @Id
@@ -21,10 +23,13 @@ public class User {
 
     @NotNull
     private String login;
+
     @NotNull
     private String email;
+
     @NotNull
     private String encryptedPassword;
+
     @CreationTimestamp
     private OffsetDateTime createdDate;
 

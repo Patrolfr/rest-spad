@@ -1,6 +1,6 @@
 package ani.fraczek.controller;
 
-import ani.fraczek.domain.entity.User;
+import ani.fraczek.domain.dto.UserDTO;
 import ani.fraczek.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ public class UserController {
 
     // check lazy loading of roles
     @GetMapping
-    public ResponseEntity<List<User>> getAll(){
-        List<User> users = userService.retrieveAll();
-        return users.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(users);
+    public ResponseEntity<List<UserDTO>> getAll(){
+        List<UserDTO> userDTOS = userService.retrieveAll();
+        return userDTOS.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(userDTOS);
     }
 
 }

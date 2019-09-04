@@ -1,6 +1,6 @@
 package ani.fraczek.controller;
 
-import ani.fraczek.domain.entity.User;
+import ani.fraczek.domain.dto.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +41,8 @@ public class UserControllerIntTest {
         String contentAsString = mvcResult.getResponse().getContentAsString();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Object o = objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), User[].class);
+        objectMapper.findAndRegisterModules();
+        UserDTO[] userDTOS = objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), UserDTO[].class);
 
     }
 
