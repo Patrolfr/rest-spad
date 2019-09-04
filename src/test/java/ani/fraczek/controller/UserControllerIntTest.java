@@ -33,7 +33,7 @@ public class UserControllerIntTest {
     ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "mockUser1")
     public void given_authorizedUser_getAllUsers_shouldReturn_ListOfUsers() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
