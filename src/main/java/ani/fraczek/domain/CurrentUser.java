@@ -1,4 +1,4 @@
-package ani.fraczek.domain.entity;
+package ani.fraczek.domain;
 
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;

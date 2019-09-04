@@ -1,6 +1,6 @@
 package ani.fraczek.security;
 
-import ani.fraczek.domain.entity.CurrentUser;
+import ani.fraczek.domain.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
