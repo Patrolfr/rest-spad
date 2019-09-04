@@ -26,20 +26,20 @@ public class SingletonTest {
         Single single = (Single) obj;
 
 //        interesting, getInstance hasn't been called while single's instance single has been initialized
-        Assert.assertEquals(0L, single.getGetInstanceCounter());
+        Assert.assertEquals(0L, single.getInstanceCallCounter());
         Assert.assertNotEquals(single, single.getInstance());
     }
 
     @Test
     public void singleton_singleInstance_test(){
 
-        Assert.assertEquals(0L, Single.getGetInstanceCounter());
+        Assert.assertEquals(0L, Single.getInstanceCallCounter());
 
         Single instance = Single.getInstance();
-        Assert.assertEquals(1L, Single.getGetInstanceCounter());
+        Assert.assertEquals(1L, Single.getInstanceCallCounter());
 
         Single instance2 = Single.getInstance();
-        Assert.assertEquals(2L, Single.getGetInstanceCounter());
+        Assert.assertEquals(2L, Single.getInstanceCallCounter());
 
         Assert.assertEquals(instance, instance2);
         Assert.assertEquals(instance.hashCode(), instance2.hashCode());

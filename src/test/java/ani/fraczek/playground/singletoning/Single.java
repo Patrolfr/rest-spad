@@ -6,16 +6,13 @@ import lombok.Getter;
 class Single {
     private static Single singleInstance;
     @Getter
-    private static int getInstanceCounter;
+    private static int instanceCallCounter;
 
     public static Single getInstance() {
-        Single.getInstanceCounter++;
+        Single.instanceCallCounter++;
         if(singleInstance == null)
             singleInstance = new Single();
         return singleInstance;
     }
 
-    public static int getGetInstanceCounter() {
-        return getInstanceCounter;
-    }
 }

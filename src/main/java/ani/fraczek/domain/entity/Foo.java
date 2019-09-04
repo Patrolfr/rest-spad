@@ -3,13 +3,11 @@ package ani.fraczek.domain.entity;
 import ani.fraczek.domain.definition.SpadObjType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
