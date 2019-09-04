@@ -29,6 +29,9 @@ public class UserControllerIntTest {
     @Autowired
     MockMvc mockMvc;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     @Test
     @WithMockUser
     public void given_authorizedUser_getAllUsers_shouldReturn_ListOfUsers() throws Exception {
@@ -40,8 +43,7 @@ public class UserControllerIntTest {
                 .andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.findAndRegisterModules();
+
         UserDTO[] userDTOS = objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), UserDTO[].class);
 
     }
