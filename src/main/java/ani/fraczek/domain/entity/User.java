@@ -1,23 +1,15 @@
 package ani.fraczek.domain.entity;
 
 import lombok.Getter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.OffsetDateTime;
 import java.util.Set;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "spad_user")
 @Getter
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+public class User extends AbstractEntity {
 
     private String firstName, lastName;
 
@@ -29,9 +21,6 @@ public class User {
 
     @NotNull
     private String encryptedPassword;
-
-    @CreationTimestamp
-    private OffsetDateTime createdDate;
 
     @ManyToMany
     @JoinTable(name = "user_role",

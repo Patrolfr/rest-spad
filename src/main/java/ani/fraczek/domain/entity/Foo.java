@@ -5,17 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Foo {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private Long id;
+public class Foo extends AbstractEntity{
 
     private String name;
 

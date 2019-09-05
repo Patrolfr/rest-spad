@@ -17,6 +17,9 @@ spring:
           use_jdbc_metadata_defaults: false
         jdbc:
           lob:non_contextual_creation: true
+  flyway:
+    enabled: true
+
 logging:
   level:
     ani: DEBUG
