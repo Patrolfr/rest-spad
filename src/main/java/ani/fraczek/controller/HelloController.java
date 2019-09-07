@@ -27,7 +27,9 @@ public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImp.class);
 
     @GetMapping(value = "hello")
-    public String hello(){
+    public String hello(HttpServletRequest request){
+        logger.debug("ROLE_ADMIN: " + request.isUserInRole("ROLE_ADMIN"));
+        logger.debug("ROLE_USER: " + request.isUserInRole("ROLE_USER"));
         return "Hello";
     }
 
@@ -36,7 +38,6 @@ public class HelloController {
     public String helloUser(HttpServletRequest request){
         logger.debug("ROLE_ADMIN: " + request.isUserInRole("ROLE_ADMIN"));
         logger.debug("ROLE_USER: " + request.isUserInRole("ROLE_USER"));
-//        fooRepository.save(new Foo());
         return "HelloUser";
     }
 

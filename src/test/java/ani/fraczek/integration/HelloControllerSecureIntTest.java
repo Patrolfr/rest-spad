@@ -4,6 +4,7 @@ package ani.fraczek.integration;
 import ani.fraczek.repository.FooRepository;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class HelloControllerSecureIntTest {
     }
 
     @Test
+    @Ignore
     public void hello_shouldNotAuthorizeRequest() throws Exception {
         MvcResult mvcResult =
                 mockMvc.perform(MockMvcRequestBuilders
