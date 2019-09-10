@@ -1,6 +1,7 @@
 package ani.fraczek.domain;
 
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Builder
+@Getter
 public class CurrentUser implements UserDetails {
 
     private String username;

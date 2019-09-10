@@ -1,21 +1,53 @@
 package ani.fraczek.controller;
 
+import ani.fraczek.domain.dto.PostDTO;
+import ani.fraczek.domain.entity.Post;
+import ani.fraczek.service.PostService;
+import ani.fraczek.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping
+@RequiredArgsConstructor
 public class PostController {
 
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public List<String> getAllCurrentUserPosts(){
-        return Collections.singletonList("post");
+    private final PostService postService;
+
+    private final UserService userService;
+
+    @GetMapping("posts/user")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity getAllCurrentUserPosts() {
+
+        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userService.getCurrentDomainUser().getId());
+
+        return postDTOS.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(postDTOS);
+    }
+
+    @GetMapping("users/{userId}/posts")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity getAllUserPosts(@PathVariable final Long userId) {
+
+        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userId);
+
+        return postDTOS.isEmpty()
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.ok(postDTOS);
+    }
+
+    @PostMapping("posts/")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity addPost(@Valid final PostDTO postDTO) {
+        Post addedPost = postService.createPost(postDTO);
+        return ResponseEntity.ok(PostDTO.ofPost(addedPost));
     }
 
 }

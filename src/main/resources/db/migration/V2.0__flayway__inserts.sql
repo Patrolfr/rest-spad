@@ -14,3 +14,6 @@ INSERT INTO user_role VALUES(1111, 2);
 INSERT INTO user_role VALUES(1112, 2);
 INSERT INTO user_role VALUES(1113, 2);
 
+INSERT INTO post VALUES (110, now(), now(), 0, 'Wczoraj Dagmarka kupiła shaker.', 'Realcja z zakupów', 1112);
+INSERT INTO post VALUES (111, now(), now(), 0, 'Wczoraj Dagmarka kupiła kolke.', 'Realcja z zakupów', 1112);
+INSERT INTO post VALUES (112, now(), now(), 0, 'Wczoraj Dagmarka nie kupiła butół DKNY :<.', 'Realcja z zakupów', 1112);
