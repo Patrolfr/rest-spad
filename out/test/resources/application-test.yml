@@ -1,4 +1,5 @@
 spring:
+  security:
   datasource:
     initialization-mode: embedded
     username: greuser

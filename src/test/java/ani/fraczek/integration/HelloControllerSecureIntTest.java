@@ -73,6 +73,17 @@ public class HelloControllerSecureIntTest {
                         .andReturn();
     }
 
+    @Test
+    @WithMockUser(roles = "USER")
+    public void helloPost_shouldAuthorizeRequest_forUserOfRole_ROLE_USER() throws Exception {
+        MvcResult mvcResult =
+                mockMvc.perform(MockMvcRequestBuilders
+                            .post("/helloPost")
+                            .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andReturn();
+    }
+
 
 
 }
