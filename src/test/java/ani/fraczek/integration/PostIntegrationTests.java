@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,6 +19,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
 
 
 @SpringBootTest
@@ -68,23 +71,32 @@ public class PostIntegrationTests {
     @Test
     @WithMockUser(roles = {"USER"}, username = "mockUser1")
     public void test_addPost() throws Exception {
+        PostDTO fakePostDTO = createFakePostDTO(1112L);
 
-        PostDTO postDTO = PostDTO.builder()
-                .text("test text")
-                .title("testTitle")
-                .posterId(1112L)
-                .build();
-
-        byte[] payload = objectMapper.writeValueAsBytes(postDTO);
-        String stringPayload = objectMapper.writeValueAsString(postDTO);
-
-        mockMvc.perform(MockMvcRequestBuilders
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .post("/posts")
-                .content(stringPayload)
+                .headers(getRequestHeaders())
+                .content(objectMapper.writeValueAsBytes(fakePostDTO))
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
+        PostDTO postDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PostDTO.class);
+        assertEquals(fakePostDTO, postDTO);
     }
 
+
+    private PostDTO createFakePostDTO(long userId) {
+        return PostDTO.builder()
+                .text("test text user_" + userId)
+                .title("testTitle")
+                .posterId(userId)
+                .build();
+    }
+
+    private HttpHeaders getRequestHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        return headers;
+    }
 }

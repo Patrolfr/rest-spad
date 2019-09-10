@@ -23,7 +23,7 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public Post createPost(PostDTO postDTO){
+    public Post createPostForCurrentUser(final PostDTO postDTO){
         Post savedPost = postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
         return savedPost;
     }

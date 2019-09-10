@@ -1,15 +1,13 @@
 package ani.fraczek.domain.dto;
 
 import ani.fraczek.domain.entity.Post;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class PostDTO {
 
     private String title, text;
