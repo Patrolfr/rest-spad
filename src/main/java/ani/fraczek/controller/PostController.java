@@ -43,9 +43,9 @@ public class PostController {
                 : ResponseEntity.ok(postDTOS);
     }
 
-    @PostMapping("posts/")
+    @PostMapping(value = "posts")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity addPost(@Valid final PostDTO postDTO) {
+    public ResponseEntity addPost(@RequestBody @Valid PostDTO postDTO) {
         Post addedPost = postService.createPost(postDTO);
         return ResponseEntity.ok(PostDTO.ofPost(addedPost));
     }

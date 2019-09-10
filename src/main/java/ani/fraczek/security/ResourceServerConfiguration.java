@@ -14,7 +14,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 //  ALL GRANTS VERIFED AT CONTROLLER/SERVICE MTHOD LEVEL
-        http.authorizeRequests().antMatchers("/**").permitAll();
+        http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll();
 
     }
 

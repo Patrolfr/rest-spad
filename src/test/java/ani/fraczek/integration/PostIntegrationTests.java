@@ -76,10 +76,11 @@ public class PostIntegrationTests {
                 .build();
 
         byte[] payload = objectMapper.writeValueAsBytes(postDTO);
+        String stringPayload = objectMapper.writeValueAsString(postDTO);
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/posts")
-                .content(payload)
+                .content(stringPayload)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
