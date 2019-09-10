@@ -37,7 +37,7 @@ public class PostIntegrationTests {
 
 
     @Test
-    @WithMockUser(roles = {"USER"}, username = "mockUser1")
+    @WithMockUser(username = "test1")
     public void test_getAllCurrentUserPosts() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
@@ -53,7 +53,7 @@ public class PostIntegrationTests {
     }
 
     @Test
-    @WithMockUser(roles = {"USER"}, username = "mockUser1")
+    @WithMockUser(roles = {"USER"})
     public void test_getAllPostsOfUser() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
@@ -69,9 +69,9 @@ public class PostIntegrationTests {
     }
 
     @Test
-    @WithMockUser(roles = {"USER"}, username = "mockUser1")
+    @WithMockUser(username = "test1")
     public void test_addPost() throws Exception {
-        PostDTO fakePostDTO = createFakePostDTO(1112L);
+        PostDTO fakePostDTO = createFakePostDTO(1111L);
 
         MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
                 .post("/posts")

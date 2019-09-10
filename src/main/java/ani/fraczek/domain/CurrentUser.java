@@ -3,11 +3,10 @@ package ani.fraczek.domain;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -17,10 +16,11 @@ public class CurrentUser implements UserDetails {
 
     private String password;
 
+    private Set<GrantedAuthority> grantedAuthorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return "admin".equals(username) ? Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
-                : Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return grantedAuthorities;
     }
 
     @Override

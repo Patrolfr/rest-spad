@@ -1,5 +1,7 @@
 package ani.fraczek.domain.entity;
 
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ public class Role {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @Getter
     private String name;
 
 }
