@@ -1,13 +1,13 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
+    id 'war'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 group = 'ani.fraczek'
 version = '0.0.1-SNAPSHOT'
-//sourceCompatibility = '12'
 
 configurations {
     compileOnly {
@@ -22,7 +22,6 @@ repositories {
 dependencies {
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.4.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.liquibase:liquibase-core'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.0.4.RELEASE'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.3'
     compileOnly 'org.projectlombok:lombok'
@@ -34,4 +33,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.1.6.RELEASE'
 
+}
+
+processResources {
+    println '### custom processResources'
+    exclude("*workflow")
 }
