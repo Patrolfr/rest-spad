@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,24 +28,23 @@ public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(UserDetailsServiceImp.class);
 
     @GetMapping(value = "hello")
-    public String hello(){
+    public String hello(HttpServletRequest request){
+        debugRoles(request);
         return "Hello";
     }
 
     @GetMapping(value = "helloUser")
     @PreAuthorize("hasRole('ROLE_USER')")
     public String helloUser(HttpServletRequest request){
-        logger.debug("ROLE_ADMIN: " + request.isUserInRole("ROLE_ADMIN"));
-        logger.debug("ROLE_USER: " + request.isUserInRole("ROLE_USER"));
-//        fooRepository.save(new Foo());
+        debugRoles(request);
         return "HelloUser";
     }
 
     @GetMapping(value = "helloAdmin")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String helloAdmin(HttpServletRequest request){
-        logger.debug("ROLE_ADMIN: " + request.isUserInRole("ROLE_ADMIN"));
-        logger.debug("ROLE_USER: " + request.isUserInRole("ROLE_USER"));
+        debugRoles(request);
+
         objTypeRepository.findByType(NOT_DOMAIN_OBJECT)
                 .ifPresent(objType ->
                         fooRepository.save(Foo.builder().objType(objType).build())
@@ -53,4 +53,15 @@ public class HelloController {
         return "HelloAdmin";
     }
 
+    @PostMapping(value = "helloPost")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public String helloPost(HttpServletRequest request){
+        debugRoles(request);
+        return "HelloAdmin";
+    }
+
+    private final void debugRoles(HttpServletRequest request){
+        logger.debug("ROLE_ADMIN: " + request.isUserInRole("ROLE_ADMIN"));
+        logger.debug("ROLE_USER: " + request.isUserInRole("ROLE_USER"));
+    }
 }

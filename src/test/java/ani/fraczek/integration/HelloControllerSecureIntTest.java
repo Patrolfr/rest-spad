@@ -40,12 +40,13 @@ public class HelloControllerSecureIntTest {
     }
 
     @Test
-    public void hello_shouldNotAuthorizeRequest() throws Exception {
+    @WithMockUser
+    public void hello_shouldAuthorizeRequest() throws Exception {
         MvcResult mvcResult =
                 mockMvc.perform(MockMvcRequestBuilders
                             .get("/hello")
                             .accept(MediaType.APPLICATION_JSON))
-                        .andExpect(MockMvcResultMatchers.status().is4xxClientError())
+                        .andExpect(MockMvcResultMatchers.status().isOk())
                         .andReturn();
     }
 
@@ -66,6 +67,17 @@ public class HelloControllerSecureIntTest {
         MvcResult mvcResult =
                 mockMvc.perform(MockMvcRequestBuilders
                             .get("/helloAdmin")
+                            .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isOk())
+                        .andReturn();
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    public void helloPost_shouldAuthorizeRequest_forUserOfRole_ROLE_USER() throws Exception {
+        MvcResult mvcResult =
+                mockMvc.perform(MockMvcRequestBuilders
+                            .post("/helloPost")
                             .accept(MediaType.APPLICATION_JSON))
                         .andExpect(MockMvcResultMatchers.status().isOk())
                         .andReturn();
