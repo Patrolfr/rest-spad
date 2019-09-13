@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
     id 'war'
+    id 'com.avast.gradle.docker-compose' version '0.9.4'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -36,6 +37,15 @@ dependencies {
 }
 
 processResources {
-    println '### custom processResources'
+    println '### configure processResources'
     exclude("*workflow")
+}
+
+dockerCompose {
+    userComposeFiles('scratchpad_test_postgres.yml')
+}
+
+test {
+    dependsOn composeUp
+    finalizedBy composeDown
 }
