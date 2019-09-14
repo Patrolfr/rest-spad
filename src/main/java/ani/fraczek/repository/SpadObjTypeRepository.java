@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface SpadObjTypeRepository extends JpaRepository<SpadObjType, Long> {
 
     Optional<SpadObjType> findByType(String type);
+
+    SpadObjType findOneByType(String type);
 }

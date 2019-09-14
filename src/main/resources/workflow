@@ -1,10 +1,17 @@
 _____done
 UserController
 Oatuh2 bearer..
-
-_____todo
 travis/jenkins tests -> docker db for flyway?
 coveralls :>
-Swaggier
+
+_____todo
+JpaRepository vs Pg repository
+post/reaction service/controller/tests
+column definition vs type
 static user utils(?)
 --andDo.. test
+flexible jsonb(?)
+
+
+Swaggier
+@UnitTests/@ContextTests(docker etc.)
