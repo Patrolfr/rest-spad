@@ -19,6 +19,11 @@ spring:
           lob:non_contextual_creation: true
   flyway:
     enabled: true
+  output:
+    ansi:
+      enabled: ALWAYS
+  banner:
+    location: classpath:spad_banner.txt
 
 logging:
   level:
