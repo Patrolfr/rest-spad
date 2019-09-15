@@ -17,15 +17,14 @@ public class PostService {
 
     private final UserService userService;
 
-    public List<PostDTO> getALlPostsOfUser(Long userId){
-        return postRepository.findAllByPosterId(userId)
+    public List<PostDTO> getAllPostsOfUser(String login){
+        return postRepository.findAllByPoster(userService.getUserByLogin(login))
                 .stream().map(PostDTO::ofPost)
                 .collect(Collectors.toList());
     }
 
     public Post createPostForCurrentUser(final PostDTO postDTO){
-        Post savedPost = postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
-        return savedPost;
+        return postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
     }
 
 

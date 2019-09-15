@@ -25,18 +25,17 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity getAllCurrentUserPosts() {
 
-        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userService.getCurrentDomainUser().getId());
+        List<PostDTO> postDTOS = postService.getAllPostsOfUser(userService.getCurrentUserLogin());
 
         return postDTOS.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(postDTOS);
     }
 
-    @GetMapping("users/{userId}/posts")
+    @GetMapping("users/{login}/posts")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity getAllUserPosts(@PathVariable final Long userId) {
-
-        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userId);
+    public ResponseEntity getAllUserPosts(@PathVariable final String login) {
+        List<PostDTO> postDTOS = postService.getAllPostsOfUser(login);
 
         return postDTOS.isEmpty()
                 ? ResponseEntity.noContent().build()

@@ -1,6 +1,9 @@
 package ani.fraczek.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +12,9 @@ import java.util.Set;
 @Entity
 @Table(name = "spad_user")
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User extends AbstractEntity {
 
     private String firstName, lastName;

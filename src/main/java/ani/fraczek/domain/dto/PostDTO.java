@@ -5,6 +5,7 @@ import lombok.*;
 
 @Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -12,13 +13,13 @@ public class PostDTO {
 
     private String title, text;
 
-    private Long posterId;
+    private String posterLogin;
 
     public static PostDTO ofPost(Post post){
         return PostDTO.builder()
                 .text(post.getText())
                 .title(post.getTitle())
-                .posterId(post.getPoster().getId())
+                .posterLogin(post.getPoster().getLogin())
                 .build();
     }
 }
