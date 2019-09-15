@@ -1,17 +1,18 @@
 package ani.fraczek.domain.entity;
 
 import lombok.Builder;
+import lombok.Getter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Builder
+@Getter
 @Table(name = "reaction")
 public class Reaction extends AbstractEntity {
-
-    @Id
-    @GeneratedValue
-    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -29,7 +30,5 @@ public class Reaction extends AbstractEntity {
     private String title;
 
     private String content;
-
-
 
 }

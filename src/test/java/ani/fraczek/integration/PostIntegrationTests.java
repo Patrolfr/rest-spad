@@ -47,7 +47,7 @@ public class PostIntegrationTests {
                 .andDo(result -> {
                     byte[] contentAsByteArray = result.getResponse().getContentAsByteArray();
                     final Set postDTOS = objectMapper.readValue(contentAsByteArray, Set.class);
-                    Contracts.assertNotEmpty(postDTOS, "Posts should not be empty.");
+                    assertEquals(2l, postDTOS.size());
                 })
                 .andReturn();
     }
