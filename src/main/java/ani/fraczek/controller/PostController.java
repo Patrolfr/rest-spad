@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -47,6 +48,14 @@ public class PostController {
     public ResponseEntity addPost(@RequestBody @Valid final PostDTO postDTO) {
         Post addedPost = postService.createPostForCurrentUser(postDTO);
         return ResponseEntity.ok(PostDTO.ofPost(addedPost));
+    }
+
+    @DeleteMapping(value = "posts/{postId}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity deleteCurrentUserPost(@PathVariable(required = true) long postId){
+        Optional<Post> deletedPost = postService.deleteCurrentUserPost(postId);
+        return deletedPost.map(deleted -> ResponseEntity.ok(PostDTO.ofPost(deleted)))
+                .orElse(ResponseEntity.badRequest().build());
     }
 
 }

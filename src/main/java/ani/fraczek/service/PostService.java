@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,14 +18,18 @@ public class PostService {
 
     private final UserService userService;
 
-    public List<PostDTO> getAllPostsOfUser(String login){
+    public List<PostDTO> getAllPostsOfUser(String login) {
         return postRepository.findAllByPoster(userService.getUserByLogin(login))
                 .stream().map(PostDTO::ofPost)
                 .collect(Collectors.toList());
     }
 
-    public Post createPostForCurrentUser(final PostDTO postDTO){
+    public Post createPostForCurrentUser(final PostDTO postDTO) {
         return postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
+    }
+
+    public Optional<Post> deleteCurrentUserPost(long postId) {
+        return postRepository.findByIdAndPoster(postId, userService.getCurrentDomainUser());
     }
 
 

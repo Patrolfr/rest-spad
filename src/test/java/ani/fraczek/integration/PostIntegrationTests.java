@@ -67,8 +67,8 @@ public class PostIntegrationTests {
 
     @After
     public void clean(){
-        postRepository.deleteAllByPoster(userRepository.findUsersByLogin("testWith2Posts"));
-        postRepository.deleteAllByPoster(userRepository.findUsersByLogin("testUserToCreatePost"));
+        postRepository.deleteAllByPoster(userRepository.findUserByLogin("testWith2Posts"));
+        postRepository.deleteAllByPoster(userRepository.findUserByLogin("testUserToCreatePost"));
 
         userRepository.deleteByLogin("testWithoutPosts");
         userRepository.deleteByLogin("testWith2Posts");
@@ -130,14 +130,33 @@ public class PostIntegrationTests {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
-        PostDTO postDTO = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PostDTO.class);
-        assertEquals(fakePostDTO, postDTO);
+        PostDTO postDTOResponse = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), PostDTO.class);
+        assertEquals(fakePostDTO.getPosterLogin(), postDTOResponse.getPosterLogin());
+        assertEquals(fakePostDTO.getText(), postDTOResponse.getText());
+        assertEquals(fakePostDTO.getTitle(), postDTOResponse.getTitle());
 
-        List<Post> allPosts = postRepository.findAllByPoster(userRepository.findUsersByLogin("testUserToCreatePost"));
+        List<Post> allPosts = postRepository.findAllByPoster(userRepository.findUserByLogin("testUserToCreatePost"));
         Assert.assertFalse(allPosts.isEmpty());
         assertEquals(1L, allPosts.size());
     }
 
+    @Test
+    @WithMockUser(username = "testUserToCreatePost")
+    public void test_deleteCurrentUserPost_givenUserWithPost() throws Exception {
+        User testUserToDeletePost = userRepository.findUserByLogin("testUserToCreatePost");
+        Post postToDelete = postRepository.save(createFakePost(testUserToDeletePost, "text of postToDelete", "titleToDelete"));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/posts/" + postToDelete.getId())
+                .headers(getRequestHeaders())
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(result -> {
+                    PostDTO postDTOResponse = objectMapper.readValue(result.getResponse().getContentAsString(), PostDTO.class);
+                    assertEquals(PostDTO.ofPost(postToDelete), postDTOResponse);
+                })
+                .andReturn();
+    }
 
 
 

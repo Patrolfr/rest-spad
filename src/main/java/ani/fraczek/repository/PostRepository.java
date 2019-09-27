@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -17,5 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Transactional
     void deleteAllByPoster(User poster);
+
+    Optional<Post> findByIdAndPoster(long id, User poster);
 
 }

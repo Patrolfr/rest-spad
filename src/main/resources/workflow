@@ -3,10 +3,14 @@ UserController
 Oatuh2 bearer..
 travis/jenkins tests -> docker db for flyway?
 coveralls :>
+post service/controller/tests
+
+___in progress
+followee
+reaction service/controller/tests
 
 _____todo
 JpaRepository vs Pg repository
-post/reaction service/controller/tests
 column definition vs type
 static user utils(?)
 --andDo.. test

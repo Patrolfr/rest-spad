@@ -27,7 +27,7 @@ public class UserService {
 
     public User getCurrentDomainUser(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUsersByLogin(userDetails.getUsername());
+        return userRepository.findUserByLogin(userDetails.getUsername());
     }
 
     public String getCurrentUserLogin(){
