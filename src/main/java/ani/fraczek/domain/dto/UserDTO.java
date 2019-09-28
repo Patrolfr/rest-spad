@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 @Getter
 public class UserDTO {
 
-    private Long id;
+    private long id;
 
     private String firstName, lastName;
 

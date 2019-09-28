@@ -34,4 +34,16 @@ public class User extends AbstractEntity {
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
     Set<Role> roles;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "follower_followee",
+            joinColumns = @JoinColumn(name = "follower_id"),
+            inverseJoinColumns = @JoinColumn(name = "followee_id"))
+    Set<User> followees;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "follower_followee",
+            joinColumns = @JoinColumn(name = "followee_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    Set<User> followers;
+
 }

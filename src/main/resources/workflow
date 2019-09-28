@@ -10,12 +10,10 @@ followee
 reaction service/controller/tests
 
 _____todo
-JpaRepository vs Pg repository
+scheduled job(with transactional chunk/q)
+github repo info fetch
 column definition vs type
 static user utils(?)
---andDo.. test
-flexible jsonb(?)
-
-
+static test utils (getHeaders, createUser?(static?))
 Swaggier
 @UnitTests/@ContextTests(docker etc.)

@@ -30,8 +30,13 @@ public class UserService {
         return userRepository.findUserByLogin(userDetails.getUsername());
     }
 
-    public String getCurrentUserLogin(){
+    public String getCurrentUserLogin() {
         return getCurrentDomainUser().getLogin();
+    }
+
+    public long getCurrentUserId() {
+//        TODO throw CurrentUserNotPresent? for tests?
+        return getCurrentDomainUser().getId();
     }
 
 }
