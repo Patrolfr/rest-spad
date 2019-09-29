@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -25,9 +26,7 @@ public class PostController {
     @GetMapping("posts/user")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity getAllCurrentUserPosts() {
-
         List<PostDTO> postDTOS = postService.getAllPostsOfUser(userService.getCurrentUserLogin());
-
         return postDTOS.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(postDTOS);
@@ -52,10 +51,19 @@ public class PostController {
 
     @DeleteMapping(value = "posts/{postId}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity deleteCurrentUserPost(@PathVariable(required = true) long postId){
+    public ResponseEntity deleteCurrentUserPost(@PathVariable(required = true) long postId) {
         Optional<Post> deletedPost = postService.deleteCurrentUserPost(postId);
         return deletedPost.map(deleted -> ResponseEntity.ok(PostDTO.ofPost(deleted)))
                 .orElse(ResponseEntity.badRequest().build());
     }
+
+    @GetMapping("users/current/timeline")
+    public ResponseEntity getCurrentUserTimeline() {
+        Set<PostDTO> currentUserTimeline = postService.getCurrentUserTimeline();
+        return currentUserTimeline.isEmpty() ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.ok(currentUserTimeline);
+    }
+
 
 }

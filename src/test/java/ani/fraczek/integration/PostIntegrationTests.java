@@ -158,8 +158,21 @@ public class PostIntegrationTests {
                 .andReturn();
     }
 
+    @Test
+    @WithMockUser(username = "userToTestTimeline")
+    public void test_getUserTimeline(){
+        User user = createAndSaveUser("userToTestTimeline", "ROLE_USER");
+        User followee1 = createAndSaveUser("uFollowee1", "ROLE_USER");
+        User followee2 = createAndSaveUser("uFollowee2", "ROLE_USER");
+        User followee3 = createAndSaveUser("uFollowee3", "ROLE_USER");
+    }
 
 
+
+
+    private User createAndSaveUser(String login, String roleName) {
+        return userRepository.save(createFakeUser(login, roleName));
+    }
 
     private Post createFakePost(User user, String text, String title){
         return Post.builder()

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +33,12 @@ public class PostService {
         return postRepository.findByIdAndPoster(postId, userService.getCurrentDomainUser());
     }
 
+    public Set<PostDTO> getCurrentUserTimeline(){
+        return postRepository.getAllPostsOfFolloweesByUserId(userService.getCurrentUserId())
+                .stream()
+                .map(PostDTO::ofPost)
+                .collect(Collectors.toSet());
+    }
 
 
 
