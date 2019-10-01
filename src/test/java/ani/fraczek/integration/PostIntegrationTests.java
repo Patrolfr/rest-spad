@@ -1,9 +1,11 @@
 package ani.fraczek.integration;
 
 import ani.fraczek.domain.dto.PostDTO;
+import ani.fraczek.domain.entity.FollowerFollowee;
 import ani.fraczek.domain.entity.Post;
 import ani.fraczek.domain.entity.Role;
 import ani.fraczek.domain.entity.User;
+import ani.fraczek.repository.FollowerRepository;
 import ani.fraczek.repository.PostRepository;
 import ani.fraczek.repository.RoleRepository;
 import ani.fraczek.repository.UserRepository;
@@ -33,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 @SpringBootTest
@@ -56,6 +59,10 @@ public class PostIntegrationTests {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    FollowerRepository followerRepository;
+
+
     @Before
     public void setUp(){
         User testUser1 = userRepository.save(createFakeUser("testWithoutPosts", "ROLE_USER"));
@@ -69,10 +76,17 @@ public class PostIntegrationTests {
     public void clean(){
         postRepository.deleteAllByPoster(userRepository.findUserByLogin("testWith2Posts"));
         postRepository.deleteAllByPoster(userRepository.findUserByLogin("testUserToCreatePost"));
+        postRepository.deleteAllByPoster(userRepository.findUserByLogin("uFollowee1"));
+        postRepository.deleteAllByPoster(userRepository.findUserByLogin("uFollowee2"));
+        postRepository.deleteAllByPoster(userRepository.findUserByLogin("uFollowee3"));
 
         userRepository.deleteByLogin("testWithoutPosts");
         userRepository.deleteByLogin("testWith2Posts");
         userRepository.deleteByLogin("testUserToCreatePost");
+        userRepository.deleteByLogin("userToTestTimeline");
+        userRepository.deleteByLogin("uFollowee1");
+        userRepository.deleteByLogin("uFollowee2");
+        userRepository.deleteByLogin("uFollowee3");
     }
 
 
@@ -160,15 +174,43 @@ public class PostIntegrationTests {
 
     @Test
     @WithMockUser(username = "userToTestTimeline")
-    public void test_getUserTimeline(){
+    public void test_getUserTimeline() throws Exception {
         User user = createAndSaveUser("userToTestTimeline", "ROLE_USER");
         User followee1 = createAndSaveUser("uFollowee1", "ROLE_USER");
         User followee2 = createAndSaveUser("uFollowee2", "ROLE_USER");
         User followee3 = createAndSaveUser("uFollowee3", "ROLE_USER");
+        followerRepository.save(new FollowerFollowee(user.getId(), followee1.getId()));
+        followerRepository.save(new FollowerFollowee(user.getId(), followee2.getId()));
+        followerRepository.save(new FollowerFollowee(user.getId(), followee3.getId()));
+        createAndSaveFakePost(1, followee1);
+        createAndSaveFakePost(2, followee2);
+        createAndSaveFakePost(3, followee3);
+        createAndSaveFakePost(4, followee1);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/users/current/timeline")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(result -> {
+                    PostDTO[] timeline = objectMapper.readValue(result.getResponse().getContentAsString(), PostDTO[].class);
+                    assertEquals(4, timeline.length);
+                    assertTrue(timeline[0].getTitle().contains("titleTestOrder4"));
+                    assertTrue(timeline[1].getTitle().contains("titleTestOrder3"));
+                    assertTrue(timeline[2].getTitle().contains("titleTestOrder2"));
+                    assertTrue(timeline[3].getTitle().contains("titleTestOrder1"));
+                })
+                .andReturn();
     }
 
 
-
+    private Post createAndSaveFakePost(long id, User user) {
+        return postRepository.save(Post.builder()
+                .poster(user)
+                .text("textTest" + id)
+                .title("titleTestOrder" + id)
+                .build()
+        );
+    }
 
     private User createAndSaveUser(String login, String roleName) {
         return userRepository.save(createFakeUser(login, roleName));

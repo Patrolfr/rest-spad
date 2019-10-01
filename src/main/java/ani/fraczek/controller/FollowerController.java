@@ -12,7 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
-public class FolloweeController {
+public class FollowerController {
 
     private final FollowerService followerService;
 
@@ -24,7 +24,6 @@ public class FolloweeController {
 
     @GetMapping("users/current/followees")
     public ResponseEntity getCurrentUserFollowees(){
-
         Set<String> currentUserFollowees = followerService.getCurrentUserFollowees();
         return currentUserFollowees.isEmpty() ?
                ResponseEntity.noContent().build() :

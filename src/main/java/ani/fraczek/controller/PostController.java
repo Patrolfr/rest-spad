@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -59,7 +58,7 @@ public class PostController {
 
     @GetMapping("users/current/timeline")
     public ResponseEntity getCurrentUserTimeline() {
-        Set<PostDTO> currentUserTimeline = postService.getCurrentUserTimeline();
+        List<PostDTO> currentUserTimeline = postService.getCurrentUserTimeline();
         return currentUserTimeline.isEmpty() ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.ok(currentUserTimeline);

@@ -78,6 +78,8 @@ public class FolloweeIntTests {
         Assert.assertThat(currentUserFollowees, CoreMatchers.hasItems("Followee1", "Followee2"));
     }
 
+//    TODO delete followee
+
     @Test
     @WithMockUser(username = "CurrentUser")
     public void test_getCurrentUserFollowees_givenUserWIthoutFollowees() throws Exception {

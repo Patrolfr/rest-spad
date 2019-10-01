@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ReactionRepository extends JpaRepository<Reaction, Long> {
 
-    public List<Reaction> findAllByPost(Post post);
+    List<Reaction> findAllByPost(Post post);
 
 }
