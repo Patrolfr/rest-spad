@@ -78,7 +78,21 @@ public class FolloweeIntTests {
         Assert.assertThat(currentUserFollowees, CoreMatchers.hasItems("Followee1", "Followee2"));
     }
 
-//    TODO delete followee
+    @Test
+    @WithMockUser(username = "CurrentUser")
+    public void test_deleteFolloweeForCurrentUser() throws Exception {
+        User currentUser = userService.getUserByLogin("CurrentUser");
+        User followee1 = userService.getUserByLogin("Followee1");
+        followerRepository.save(new FollowerFollowee(currentUser.getId(), followee1.getId()));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/users/current/followee/Followee1"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(result -> {
+                    Set<String> userFollowees = followerRepository.findUserFolloweesLoginsByUserId(currentUser.getId());
+                    Assert.assertEquals(0l, userFollowees.size());
+                });
+    }
 
     @Test
     @WithMockUser(username = "CurrentUser")

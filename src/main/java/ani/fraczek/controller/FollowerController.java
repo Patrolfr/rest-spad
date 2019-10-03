@@ -3,10 +3,7 @@ package ani.fraczek.controller;
 import ani.fraczek.service.FollowerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -20,6 +17,13 @@ public class FollowerController {
     public ResponseEntity addFolloweeForCurrentUser(@PathVariable final String followeeLogin){
         followerService.addFolloweeForCurrentUser(followeeLogin);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("users/current/followee/{followeeLogin}")
+    public ResponseEntity deleteFolloweeOfCurrentUser(@PathVariable(required = true) String followeeLogin){
+        followerService.deleteCurrentUserFollowee(followeeLogin);
+        return ResponseEntity.ok().build();
+
     }
 
     @GetMapping("users/current/followees")

@@ -49,9 +49,9 @@ processResources {
     exclude("*workflow")
 }
 
-//dockerCompose {
-//    userComposeFiles('scratchpad_test_postgres.yml')
-//}
+dockerCompose {
+    userComposeFiles('scratchpad_test_postgres.yml')
+}
 
 test {
     dependsOn composeUp

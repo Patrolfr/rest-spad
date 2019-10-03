@@ -21,6 +21,12 @@ public class FollowerService {
         followerRepository.save(new FollowerFollowee(userService.getCurrentUserId(), followee.getId()));
     }
 
+    public void deleteCurrentUserFollowee(final String followeeLogin){
+        User followee = userService.getUserByLogin(followeeLogin);
+        followerRepository.deleteByFollowerIdAndFolloweeId(userService.getCurrentUserId(), followee.getId());
+
+    }
+
     public Set<String> getCurrentUserFollowees(){
         return followerRepository.findUserFolloweesLoginsByUserId(userService.getCurrentUserId());
     }
