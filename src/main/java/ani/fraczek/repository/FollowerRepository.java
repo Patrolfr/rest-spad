@@ -31,4 +31,3 @@ public interface FollowerRepository extends JpaRepository<FollowerFollowee, Long
     Set<String> findUserFolloweesLoginsByUserId(final long userId);
 
 }
-/**/
