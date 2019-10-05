@@ -5,12 +5,12 @@ travis/jenkins tests -> docker db for flyway
 post service/controller/tests
 timline test
 followee/reaction service/controller/tests
+coverage
 
 _____in progress
 
 _____todo
 github repo info fetch
-coverage
 scheduled job(with transactional chunk/q)
 static user utils(?)
 static test utils (getHeaders, createUser?(static?))
