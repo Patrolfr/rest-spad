@@ -1,4 +1,4 @@
-package ani.fraczek.domain.definition;
+package ani.fraczek.domain.entity;
 
 import lombok.Getter;
 

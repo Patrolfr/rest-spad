@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -24,19 +25,16 @@ public class PostController {
     @GetMapping("posts/user")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity getAllCurrentUserPosts() {
-
-        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userService.getCurrentDomainUser().getId());
-
+        List<PostDTO> postDTOS = postService.getAllPostsOfUser(userService.getCurrentUserLogin());
         return postDTOS.isEmpty()
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.ok(postDTOS);
     }
 
-    @GetMapping("users/{userId}/posts")
+    @GetMapping("users/{login}/posts")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity getAllUserPosts(@PathVariable final Long userId) {
-
-        List<PostDTO> postDTOS = postService.getALlPostsOfUser(userId);
+    public ResponseEntity getAllUserPosts(@PathVariable final String login) {
+        List<PostDTO> postDTOS = postService.getAllPostsOfUser(login);
 
         return postDTOS.isEmpty()
                 ? ResponseEntity.noContent().build()
@@ -49,5 +47,22 @@ public class PostController {
         Post addedPost = postService.createPostForCurrentUser(postDTO);
         return ResponseEntity.ok(PostDTO.ofPost(addedPost));
     }
+
+    @DeleteMapping(value = "posts/{postId}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity deleteCurrentUserPost(@PathVariable(required = true) long postId) {
+        Optional<Post> deletedPost = postService.deleteCurrentUserPost(postId);
+        return deletedPost.map(deleted -> ResponseEntity.ok(PostDTO.ofPost(deleted)))
+                .orElse(ResponseEntity.badRequest().build());
+    }
+
+    @GetMapping("users/current/timeline")
+    public ResponseEntity getCurrentUserTimeline() {
+        List<PostDTO> currentUserTimeline = postService.getCurrentUserTimeline();
+        return currentUserTimeline.isEmpty() ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.ok(currentUserTimeline);
+    }
+
 
 }

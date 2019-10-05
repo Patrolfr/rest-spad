@@ -14,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @MappedSuperclass
 @Getter
-abstract class AbstractEntity {
+public abstract class AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

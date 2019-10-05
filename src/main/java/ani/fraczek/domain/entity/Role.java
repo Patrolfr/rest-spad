@@ -1,6 +1,8 @@
 package ani.fraczek.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,8 @@ import javax.persistence.Id;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -17,5 +21,4 @@ public class Role {
 
     @Getter
     private String name;
-
 }

@@ -6,6 +6,12 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.4"
+    reportsDir = file("$buildDir/reports/tests/jacoco")
+}
 
 group = 'ani.fraczek'
 version = '0.0.1-SNAPSHOT'
@@ -25,9 +31,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.0.4.RELEASE'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.7.3'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
     compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
-    testCompileOnly 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
@@ -39,21 +45,23 @@ dependencies {
 
 
 wrapper {
-    println '###wrappertask'
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion=5.3
 }
 
 processResources {
-    println '### configure processResources'
     exclude("*workflow")
-}
-
-dockerCompose {
-    userComposeFiles('scratchpad_test_postgres.yml')
 }
 
 test {
     dependsOn composeUp
     finalizedBy composeDown
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
 }

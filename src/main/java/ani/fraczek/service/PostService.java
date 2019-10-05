@@ -6,7 +6,9 @@ import ani.fraczek.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,17 +19,26 @@ public class PostService {
 
     private final UserService userService;
 
-    public List<PostDTO> getALlPostsOfUser(Long userId){
-        return postRepository.findAllByPosterId(userId)
+    public List<PostDTO> getAllPostsOfUser(String login) {
+        return postRepository.findAllByPoster(userService.getUserByLogin(login))
                 .stream().map(PostDTO::ofPost)
                 .collect(Collectors.toList());
     }
 
-    public Post createPostForCurrentUser(final PostDTO postDTO){
-        Post savedPost = postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
-        return savedPost;
+    public Post createPostForCurrentUser(final PostDTO postDTO) {
+        return postRepository.save(Post.ofPostDTOAndUser(postDTO, userService.getCurrentDomainUser()));
     }
 
+    public Optional<Post> deleteCurrentUserPost(long postId) {
+        return postRepository.findByIdAndPoster(postId, userService.getCurrentDomainUser());
+    }
+
+    public List<PostDTO> getCurrentUserTimeline() {
+        return postRepository.getAllPostsOfFolloweesByUserId(userService.getCurrentUserId())
+                .stream()
+                .map(PostDTO::ofPost)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
 
 
 

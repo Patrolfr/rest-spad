@@ -1,10 +1,24 @@
 _____done
 UserController
 Oatuh2 bearer..
+travis/jenkins tests -> docker db for flyway
+post service/controller/tests
+timline test
+followee/reaction service/controller/tests
+
+_____in progress
 
 _____todo
-travis/jenkins tests -> docker db for flyway?
-coveralls :>
-Swaggier
+github repo info fetch
+coverage
+scheduled job(with transactional chunk/q)
 static user utils(?)
---andDo.. test
+static test utils (getHeaders, createUser?(static?))
+Swaggier
+@UnitTests/@ContextTests(docker etc.)
+blocking followers
+pageable timelines/posts/tests
+
+_____study
+identity based equals implemetantion
+column definition vs type

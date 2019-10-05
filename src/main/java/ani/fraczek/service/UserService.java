@@ -21,9 +21,22 @@ public class UserService {
         return userRepository.findAll().stream().map(UserDTO::ofUser).collect(Collectors.toList());
     }
 
+    public User getUserByLogin(String login){
+        return userRepository.findByLogin(login).orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
     public User getCurrentDomainUser(){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUsersByLogin(userDetails.getUsername());
+        return userRepository.findUserByLogin(userDetails.getUsername());
+    }
+
+    public String getCurrentUserLogin() {
+        return getCurrentDomainUser().getLogin();
+    }
+
+    public long getCurrentUserId() {
+//        TODO throw CurrentUserNotPresent? for tests?
+        return getCurrentDomainUser().getId();
     }
 
 }
