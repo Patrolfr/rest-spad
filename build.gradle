@@ -6,6 +6,12 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.4"
+    reportsDir = file("$buildDir/reports/tests/jacoco")
+}
 
 group = 'ani.fraczek'
 version = '0.0.1-SNAPSHOT'
@@ -39,21 +45,23 @@ dependencies {
 
 
 wrapper {
-    println '###wrappertask'
     distributionType = Wrapper.DistributionType.ALL
     gradleVersion=5.3
 }
 
 processResources {
-    println '### configure processResources'
     exclude("*workflow")
-}
-
-dockerCompose {
-    userComposeFiles('scratchpad_test_postgres.yml')
 }
 
 test {
     dependsOn composeUp
     finalizedBy composeDown
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+    }
 }

@@ -12,8 +12,8 @@ import java.util.Set;
 @Repository
 public interface FollowerRepository extends JpaRepository<FollowerFollowee, Long> {
 
-    @Modifying
     @Transactional
+    @Modifying(flushAutomatically = true)
     @Query(value =
             "DELETE FROM follower_followee ff " +
                     "WHERE " +
@@ -31,3 +31,4 @@ public interface FollowerRepository extends JpaRepository<FollowerFollowee, Long
     Set<String> findUserFolloweesLoginsByUserId(final long userId);
 
 }
+/**/
