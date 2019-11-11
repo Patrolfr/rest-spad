@@ -43,6 +43,9 @@ dependencies {
 
 }
 
+bootRun {
+    jvmArgs = ["-javaagent:newrelic/newrelic.jar"]
+}
 
 wrapper {
     distributionType = Wrapper.DistributionType.ALL

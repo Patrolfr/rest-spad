@@ -4,6 +4,7 @@ import ani.fraczek.domain.dto.UserDTO;
 import ani.fraczek.domain.entity.User;
 import ani.fraczek.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,16 @@ public class UserService {
     }
 
     public User getCurrentDomainUser(){
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findUserByLogin(userDetails.getUsername());
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null){
+            Object principal = authentication.getPrincipal();
+            if(principal instanceof UserDetails)
+                return userRepository.findUserByLogin(((UserDetails) principal).getUsername());
+//        if(principal instanceof String)
+            return User.builder().login((String) principal).build();
+        }
+        return User.builder().login("system").build();
     }
 
     public String getCurrentUserLogin() {
