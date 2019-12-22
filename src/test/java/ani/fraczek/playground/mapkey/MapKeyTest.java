@@ -20,6 +20,10 @@ public class MapKeyTest {
         Assert.assertEquals(bar, bar1);
         Assert.assertSame(bar, bar1);
 
+        String bar0 = new String("bar");
+        Assert.assertFalse(bar == bar0);
+
+
 
         String bar3 = stringBuilder.append("bar").toString();
         Assert.assertEquals(bar, bar3);

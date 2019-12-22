@@ -17,6 +17,9 @@ spring:
           use_jdbc_metadata_defaults: false
         jdbc:
           lob:non_contextual_creation: true
+#  redis:
+#    host: 127.0.0.2
+#    port: 6379
   flyway:
     enabled: true
   output:
@@ -28,3 +31,7 @@ spring:
 logging:
   level:
     ani: DEBUG
+    org:
+      springframework:
+        transaction:
+          interceptor: TRACE
