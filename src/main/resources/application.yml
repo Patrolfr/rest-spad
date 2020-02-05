@@ -2,8 +2,8 @@
 spring:
   datasource:
     initialization-mode: embedded
-    username: greuser
-    password: gre123
+    username: postgres
+    password: password
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/scratchpad_db
   jpa:
@@ -18,7 +18,7 @@ spring:
         jdbc:
           lob:non_contextual_creation: true
 #  redis:
-#    host: 127.0.0.2
+#    host: 127.0.0.1
 #    port: 6379
   flyway:
     enabled: true

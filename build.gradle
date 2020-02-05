@@ -44,7 +44,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '5.1.6.RELEASE'
-
+    implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
 }
 
 
