@@ -22,23 +22,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MetricService {
 
-    private final static Logger log = LoggerFactory.getLogger(MetricService.class);
+    private static final Logger log = LoggerFactory.getLogger(MetricService.class);
 
     private final MetricRepository metricRepository;
 
     private final UserService userService;
 
 
-    @Retryable(value = { TransactionException.class, JpaSystemException.class, LockAcquisitionException.class},
+    @Retryable(value = {TransactionException.class, JpaSystemException.class, LockAcquisitionException.class},
             maxAttempts = 4,
             backoff = @Backoff(value = 500L))
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public SpadMetric addMetric(MetricDTO metricDTO){
+    public SpadMetric addMetric(MetricDTO metricDTO) {
         log.debug("metricDTO: {}", metricDTO);
 
         Optional<SpadMetric> byContent = metricRepository.findByContent(metricDTO.getContent());
 
-        if(!byContent.isPresent()){
+        if (byContent.isEmpty()) {
             return metricRepository.save(SpadMetric.builder()
                     .content(metricDTO.getContent())
                     .sessionUserLogin(userService.getCurrentUserLogin())
@@ -48,6 +48,4 @@ public class MetricService {
         }
         throw new MetricException("Metric exists: " + byContent.get().getContent());
     }
-
-
 }
