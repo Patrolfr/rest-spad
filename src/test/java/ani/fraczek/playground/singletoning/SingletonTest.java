@@ -5,6 +5,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.annotation.DirtiesContext;
 
+import static org.junit.Assert.assertTrue;
+
 public class SingletonTest {
 
 
@@ -18,9 +20,9 @@ public class SingletonTest {
         Class<?> SingleClass = systemClassLoader.loadClass("ani.fraczek.playground.singletoning.Single");
 
         Object obj = SingleClass.newInstance();
-        Assert.assertTrue(obj instanceof Single);;
+        assertTrue(obj instanceof Single);;
         Object obj2 = SingleClass.newInstance();
-        Assert.assertTrue(obj2 instanceof Single);
+        assertTrue(obj2 instanceof Single);
         Assert.assertNotEquals(obj, obj2);
 
         Single single = (Single) obj;
@@ -43,7 +45,7 @@ public class SingletonTest {
 
         Assert.assertEquals(instance, instance2);
         Assert.assertEquals(instance.hashCode(), instance2.hashCode());
-        Assert.assertTrue(instance == instance2);
+        assertTrue(instance == instance2);
     }
 
 }
